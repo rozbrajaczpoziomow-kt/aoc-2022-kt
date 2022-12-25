@@ -76,7 +76,7 @@ class Day7 : Solution {
 		}
 	}
 
-	override val day: Int = 7
+	override val day: UByte = 7u
 
 	override fun solve1(): String {
 		var dir: String = "/"

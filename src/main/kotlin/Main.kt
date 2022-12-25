@@ -17,8 +17,8 @@ fun main() {
 //	Day 12
 //	days.add(Day13())
 //	days.add(Day14())
-	days.add(Day15())
-//	days.add(DayNull())
+//	days.add(Day15())
+ 	days.add(Day16())
 
 	for(day in days) {
 		downloadInput(day.day)

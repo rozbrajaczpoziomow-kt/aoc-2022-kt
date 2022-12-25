@@ -3,7 +3,7 @@ package days
 import Solution
 
 class Day10 : Solution {
-	override val day: Int = 10
+	override val day: UByte = 10u
 
 	private class Instruction(private val inst: String, private val X: Int, private val takes: Int) {
 		private var tick: Int = 0

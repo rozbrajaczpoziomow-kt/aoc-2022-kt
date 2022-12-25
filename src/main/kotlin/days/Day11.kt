@@ -53,7 +53,7 @@ class Day11 : Solution {
 	}
 
 
-	override val day: Int = 11
+	override val day: UByte = 11u
 
 	override fun solve1(): String {
 		val monkeys: HashMap<Long, Monkey> = HashMap()

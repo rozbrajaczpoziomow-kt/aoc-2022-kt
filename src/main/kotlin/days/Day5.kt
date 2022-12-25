@@ -3,7 +3,7 @@ package days
 import Solution
 
 class Day5 : Solution {
-	override val day: Int = 5
+	override val day: UByte = 5u
 
 	override fun solve1(): String {
 		var gsplit: List<String> = getInputSplit("\n\n") // 0=initial; 1=moves

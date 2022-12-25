@@ -11,7 +11,7 @@ import java.nio.file.Path
 // Without proxy:
 private val http: HttpClient = HttpClient.newHttpClient()
 
-fun downloadInput(day: Int) {
+fun downloadInput(day: UByte) {
 	// If file exists - return
 	// If file doesn't exist - download the input and save as file
 	// >>> $session is stored in another kotlin file, excluded from git (for obvious reasons)
@@ -34,7 +34,7 @@ fun downloadInput(day: Int) {
 	file.writeText(response.body())
 }
 
-fun submitSolution(day: Int, part: Int, sol: String) {
+fun submitSolution(day: UByte, part: Int, sol: String) {
 	print("Do you want to submit `$sol` as the solution to day $day part $part? [yN] ")
 	if(readln().dropLastWhile { it == '\n' } != "y") return
 
@@ -52,5 +52,6 @@ fun submitSolution(day: Int, part: Int, sol: String) {
 		.replaceAfter("</p>", "") // Remove anything after the part that is interesting to us
 		.replace(Regex("</?.*?>"), "") // Remove all unnecesarry tags to avoid clutter
 		.replace("  ", " ") // Replace a small mistake in the formatting
+		.replace(Regex(" If you're stuck,.+?subreddit."), "") // Too lonnggg
 	println(resp)
 }

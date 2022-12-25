@@ -3,7 +3,7 @@ package days
 import Solution
 
 class Day1 : Solution {
-	override val day: Int = 1;
+	override val day: UByte = 1u
 
 	override fun solve1(): String {
 		var max = 0

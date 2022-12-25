@@ -5,7 +5,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 class Day14 : Solution {
-	override val day: Int = 14
+	override val day: UByte = 14u
 
 	override fun solve1(): String {
 		val inp: List<List<Pair<Int, Int>>> = getInputSplit("\n").map { line -> line.split(" -> ").map { sector -> sector.split(",").map { it.toInt() } }.map { xy -> xy[0] to xy[1] } }

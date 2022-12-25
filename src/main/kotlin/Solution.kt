@@ -2,7 +2,7 @@ import java.io.File
 import kotlin.text.Charsets.UTF_8
 
 interface Solution {
-	val day: Int
+	val day: UByte
 	fun getInputSplit(on: String): List<String> {
 		return getInput().split(on)
 	}

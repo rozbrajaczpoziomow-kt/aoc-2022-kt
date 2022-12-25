@@ -5,52 +5,78 @@ import kotlin.math.abs
 import kotlin.math.max
 
 class Day15 : Solution {
-	override val day: Int = 15
+	override val day: UByte = 15u
 
 	override fun solve1(): String {
-		val Y: Int = 2000000
-		val known: HashSet<Int> = HashSet()
-		val intervals: ArrayList<Pair<Int, Int>> = ArrayList()
-		for(line in getInputSplit("\n")) {
-			val sx: Int = line.dropWhile { it != '=' }.drop(1).dropLastWhile { it != ':' }.dropLastWhile { it != ',' }.dropLast(1).toInt()
-			val sy: Int = line.dropWhile { it != '=' }.drop(1).dropWhile { it != '=' }.drop(1).dropLastWhile { it != ':' }.dropLast(1).toInt()
-			println(line.dropWhile { it != 'c' })
-			val bx: Int = line.dropWhile { it != 'c' }.dropWhile { it != '=' }.drop(1).dropLastWhile { it != ',' }.dropLast(1).toInt()
-			val by: Int = line.dropWhile { it != 'c' }.dropWhile { it != '=' }.drop(1).dropWhile { it != '=' }.drop(1).toInt()
-			println("$sx $sy $bx $by")
-//			val (sx, sy, bx, by) = pattern.findAll(line).map { it.value.toInt() }.toList()
-			val d: Int = abs(sx - bx) + abs(sy - by)
-			val o: Int = d - abs(sy - Y)
-
-			if(o < 0)
-				continue
-
-			intervals.add((sx - o) to (sx + o))
-			if(by == Y)
-				known.add(bx)
+		val Y: Long = 2000000
+		var ans: Long = 0
+		val inps: ArrayList<LongArray> = ArrayList()
+		getInputSplit("\n").forEach { line ->
+			val sx: Long = line.dropWhile { it != '=' }.drop(1).dropLastWhile { it != ':' }.dropLastWhile { it != ',' }.dropLast(1).toLong()
+			val sy: Long = line.dropWhile { it != '=' }.drop(1).dropWhile { it != '=' }.drop(1).dropLastWhile { it != ':' }.dropLast(1).toLong()
+			val bx: Long = line.dropWhile { it != 'c' }.dropWhile { it != '=' }.drop(1).dropLastWhile { it != ',' }.dropLast(1).toLong()
+			val by: Long = line.dropWhile { it != 'c' }.dropWhile { it != '=' }.drop(1).dropWhile { it != '=' }.drop(1).toLong()
+			inps.add(longArrayOf(sx, sy, bx, by))
 		}
-//		intervals.sortBy {  }
-		val q: ArrayList<Pair<Int, Int>> = ArrayList()
-		for((lo: Int, hi: Int) in intervals) {
-			if(q.size == 0) {
-				q.add(lo to hi)
+		val intervals: ArrayList<Pair<Long, Long>> = ArrayList()
+		for((x, y, xx, yy) in inps) {
+			val dist: Long = abs(x - xx) + abs(y - yy)
+			val yDist: Long = abs(y - Y)
+			if(yDist > dist)
+				continue
+			val dx: Long = dist - yDist
+			intervals.add((x - dx) to (x + dx))
+		}
+		intervals.sortBy { it.first }
+		val nIntervals: ArrayList<Pair<Long, Long>> = ArrayList()
+		for((l, r) in intervals) {
+			if(nIntervals.size == 0 || l > nIntervals.last().second) {
+				nIntervals.add(l to r)
 				continue
 			}
-			val (qlo: Int, qhi: Int) = q.last()
-			if(lo > qhi + 1) {
-				q.add(lo to hi)
-				continue
-			}
-			q[q.lastIndex] = qlo to max(qhi, hi)
+			val r: Long = max(r, nIntervals.last().second)
+			val (ll: Long, rr: Long) = nIntervals.removeAt(nIntervals.lastIndex)
+			nIntervals.add(ll to r)
 		}
-		val cannot: HashSet<Int> = HashSet()
-		for((lo, hi) in q)
-			for(x in lo..hi+1)
-				cannot.add(x)
-		return cannot.filter { !known.contains(it) }.size.toString()
+		for((l, r) in nIntervals)
+			ans += r - l + 1
+		return (ans - 1).toString()
 	}
 
 	override fun solve2(): String {
-		return ""
+		var ans: Long = 0
+		val inps: ArrayList<LongArray> = ArrayList()
+		getInputSplit("\n").forEach { line ->
+			val sx: Long = line.dropWhile { it != '=' }.drop(1).dropLastWhile { it != ':' }.dropLastWhile { it != ',' }.dropLast(1).toLong()
+			val sy: Long = line.dropWhile { it != '=' }.drop(1).dropWhile { it != '=' }.drop(1).dropLastWhile { it != ':' }.dropLast(1).toLong()
+			val bx: Long = line.dropWhile { it != 'c' }.dropWhile { it != '=' }.drop(1).dropLastWhile { it != ',' }.dropLast(1).toLong()
+			val by: Long = line.dropWhile { it != 'c' }.dropWhile { it != '=' }.drop(1).dropWhile { it != '=' }.drop(1).toLong()
+			inps.add(longArrayOf(sx, sy, bx, by))
+		}
+		for(i in 0..4000000) {
+			val intervals: ArrayList<Pair<Long, Long>> = ArrayList()
+			for((x, y, xx, yy) in inps) {
+				val dist: Long = abs(x - xx) + abs(y - yy)
+				val yDist: Long = abs(y - i)
+				if(yDist > dist)
+					continue
+				val dx: Long = dist - yDist
+				intervals.add((x - dx) to (x + dx))
+			}
+			intervals.sortBy { it.first }
+			val nIntervals: ArrayList<Pair<Long, Long>> = ArrayList()
+			for((l, r) in intervals) {
+				if(nIntervals.size == 0 || l > nIntervals.last().second) {
+					nIntervals.add(l to r)
+					continue
+				}
+				val r: Long = max(r, nIntervals.last().second)
+				val (ll: Long, rr: Long) = nIntervals.removeAt(nIntervals.lastIndex)
+				nIntervals.add(ll to r)
+			}
+			if(nIntervals.size > 1)
+				return nIntervals.maxOf { (it.first - 1) * 4000000 + it.second }.toString()
+		}
+		return "solution not found"
 	}
 }

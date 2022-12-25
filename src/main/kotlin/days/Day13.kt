@@ -9,7 +9,7 @@ class Day13 : Solution {
 		TODO()
 	}
 
-	override val day: Int = 13
+	override val day: UByte = 13u
 
 	override fun solve1(): String {
 		val compares: ArrayList<Pair<ArrayList<List<Int>>, ArrayList<List<Int>>>> = ArrayList()

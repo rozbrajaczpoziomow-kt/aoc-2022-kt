@@ -3,7 +3,7 @@ package days
 import Solution
 
 class Day6 : Solution {
-	override val day: Int = 6
+	override val day: UByte = 6u
 
 	override fun solve1(): String {
 		val packet: String = getInput()

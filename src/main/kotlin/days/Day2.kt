@@ -17,7 +17,7 @@ class Day2 : Solution {
 		}
 	}
 
-	override val day: Int = 2;
+	override val day: UByte = 2u
 
 	private fun result(opponent: Char, you: Char): RPSResult {
 		val u = "ABC"["XYZ".indexOf(you)]

@@ -4,7 +4,7 @@ import Solution
 import kotlin.math.max
 
 class Day8 : Solution {
-	override val day: Int = 8
+	override val day: UByte = 8u
 
 	override fun solve1(): String {
 		val map: List<List<Int>> = getInputSplit("\n").map { row -> row.toList().map { col -> col.toString().toInt() } }
