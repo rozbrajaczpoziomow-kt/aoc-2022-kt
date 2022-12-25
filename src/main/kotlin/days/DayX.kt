@@ -1,5 +1,3 @@
-@file:Suppress("unused")
-
 package days
 
 import Solution
