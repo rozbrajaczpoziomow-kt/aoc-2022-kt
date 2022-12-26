@@ -76,20 +76,17 @@ class Day21 : Solution {
 		val variable: String = if(isA.contains("humn")) vA else vB
 		println("Dependent on humn: $variable")
 		val goal: Long = obtain(if(variable == vA) vB else vA, monkeys, ArrayList())
-		var current: Long = 0
+		var currentValue: Long = 0
 		// From the largest steps to the lowest: increasing precision
 		// In each bruteforce we basically see which order of magnitude is the answer - all the way from 1 billion, to 1
 		// In the end, we end up with the correct result, and it's **much** faster than just bruteforcing with a step of 1
-		current = bruteforce(current, 1_000_000_000, monkeys, variable, goal)
-		current = bruteforce(current, 100_000_000, monkeys, variable, goal)
-		current = bruteforce(current, 10_000_000, monkeys, variable, goal)
-		current = bruteforce(current, 1_000_000, monkeys, variable, goal)
-		current = bruteforce(current, 100_000, monkeys, variable, goal)
-		current = bruteforce(current, 10_000, monkeys, variable, goal)
-		current = bruteforce(current, 1_000, monkeys, variable, goal)
-		current = bruteforce(current, 100, monkeys, variable, goal)
-		current = bruteforce(current, 10, monkeys, variable, goal)
-		current = bruteforce(current, 1, monkeys, variable, goal)
+		var currentStep: Long = 1_000_000_000_000L
+		while(true) {
+			currentValue = bruteforce(currentValue, currentStep, monkeys, variable, goal)
+			if(currentStep == 1L)
+				break
+			currentStep /= 10
+		}
 		// We have the correct current value set from bruteforce
 		require(obtain(variable, monkeys, ArrayList()) == goal)
 		return monkeys["humn"]!!
