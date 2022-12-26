@@ -40,7 +40,7 @@ fun submitSolution(day: UByte, part: Int, sol: String) {
 
 	val request: HttpRequest = HttpRequest
 		.newBuilder(URI("https://adventofcode.com/2022/day/$day/answer"))
-		.POST(HttpRequest.BodyPublishers.ofString("level=$part&answer=$sol", Charsets.UTF_8))
+		.POST(HttpRequest.BodyPublishers.ofString("level=$part&answer=${sol.replace("=", "%3D")}", Charsets.UTF_8))
 		.header("Cookie", "session=$session")
 		.header("Content-Type", "application/x-www-form-urlencoded")
 		.build()

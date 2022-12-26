@@ -25,7 +25,11 @@ fun main() {
 //	days.add(Day18())
 //	Day 19
 //	Day 20
-	days.add(Day21())
+//	days.add(Day21())
+//	Day 22
+//	Day 23
+//	Day 24
+	days.add(Day25())
 
 	var durationAll: Duration = (0L).nanoseconds
 	for(day in days) {
