@@ -1,4 +1,6 @@
 import days.*
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.nanoseconds
 
 fun main() {
 	val days: ArrayList<Solution> = ArrayList()
@@ -20,22 +22,35 @@ fun main() {
 //	days.add(Day15())
 // 	days.add(Day16())
 //	Day 17
-	days.add(Day18())
+//	days.add(Day18())
+//	Day 19
+//	Day 20
+	days.add(Day21())
 
+	var durationAll: Duration = (0L).nanoseconds
 	for(day in days) {
 		downloadInput(day.day)
 		println("Solutions for day ${day.day}:")
 
+		val bf2: Long = System.nanoTime()
 		val part2: String = day.solve2()
-		println("\tPart 2 - $part2")
+		val af2: Long = System.nanoTime()
+		val took2: Duration = (af2 - bf2).nanoseconds
+		durationAll = durationAll.plus(took2)
+		println("\tPart 2 - $part2 [$took2]")
 		if(part2.isNotEmpty() && day == days.last())
 			submitSolution(day.day, 2, part2)
 
+		val bf1: Long = System.nanoTime()
 		val part1: String = day.solve1()
-		println("\tPart 1 - $part1")
+		val af1: Long = System.nanoTime()
+		val took1: Duration = (af1 - bf1).nanoseconds
+		durationAll = durationAll.plus(took1)
+		println("\tPart 1 - $part1 [$took1]")
 		if(part1.isNotEmpty() && part2.isEmpty() && day == days.last())
 			submitSolution(day.day, 1, part1)
 
 		println()
 	}
+	println("Took $durationAll")
 }
